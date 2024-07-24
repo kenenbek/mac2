@@ -50,3 +50,5 @@ def get_input_of_fva(COBRA_MODEL, strain_id, save_samples_dir, num_iter):
     if result.status != 2:  # feasible
         np.savetxt(path + '/Labels_obj.csv', [-result.fun], fmt='%10.5f')
         np.savetxt(path + '/Labels_solu.csv', result.x, fmt='%10.5f')
+
+    print("kotokbay 34")
