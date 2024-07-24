@@ -1041,7 +1041,7 @@ def models_optimize_objective(x):
     return result_return
 
 
-from kenenbek import get_input_of_fva
+from cobrascape.kenenbek import get_input_of_fva
 from functools import partial
 def models_optimize_fva(x, save_samples_dir, t):
     result_return = (x, flux_variability_analysis(Species_Object_Global.strains.get_by_id(x).cobra_model, 
