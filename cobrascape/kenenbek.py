@@ -8,6 +8,7 @@ import scipy.optimize as opt
 
 
 def get_input_of_fva(COBRA_MODEL, strain_id, save_samples_dir, num_iter):
+    print("kotokbay")
     S = cobra.util.create_stoichiometric_matrix(COBRA_MODEL)
     m = S.shape[0]
     n = S.shape[1]
