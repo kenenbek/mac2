@@ -1163,7 +1163,7 @@ def sample_species(model,save_samples_dir,variants,flux_samples, fva_rxn_set="va
                     base_bound = model.base_cobra_model.reactions.get_by_id(react).upper_bound
                     for strain_react in allele_play.cobra_reactions[react]:
 
-                        if base_bound < strain_react.lower_bound:
+                        if base_bound < constrnt_actions[constrnt]:
                             continue
 
                         strain_react.upper_bound = base_bound
@@ -1174,9 +1174,9 @@ def sample_species(model,save_samples_dir,variants,flux_samples, fva_rxn_set="va
                     base_bound = model.base_cobra_model.reactions.get_by_id(react).lower_bound
                     for strain_react in allele_play.cobra_reactions[react]:
 
-                        if constrnt_actions[constrnt] < strain_react.lower_bound:
+                        if constrnt_actions[constrnt] < base_bound:
                             continue
-                        
+
                         strain_react.upper_bound = constrnt_actions[constrnt]
                         strain_react.lower_bound = base_bound
                         
