@@ -1204,6 +1204,8 @@ def sample_species(model,save_samples_dir,variants,flux_samples, fva_rxn_set="va
                         str_obj.cobra_model.reactions.get_by_id(rxn).lower_bound=model.base_cobra_model.reactions.get_by_id(rxn).lower_bound
                         
                     if len(bnd_dict["ub"])>0:
+                        if np.mean(bnd_dict["ub"]) < str_obj.cobra_model.reactions.get_by_id(rxn).lower_bound:
+                            pass
                         str_obj.cobra_model.reactions.get_by_id(rxn).upper_bound=np.mean(bnd_dict["ub"])
                     else:
                         str_obj.cobra_model.reactions.get_by_id(rxn).upper_bound=model.base_cobra_model.reactions.get_by_id(rxn).upper_bound
