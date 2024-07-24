@@ -39,7 +39,7 @@ def get_input_of_fva(COBRA_MODEL, strain_id, save_samples_dir, num_iter):
     if not os.path.exists(path):
         os.makedirs(path)
 
-    np.savetxt(save_samples_dir + '/ConFeatures.csv', np.hstack((b.reshape(m, 1), circ.reshape(m, 1))), delimiter=',',
+    np.savetxt(path + '/ConFeatures.csv', np.hstack((b.reshape(m, 1), circ.reshape(m, 1))), delimiter=',',
                fmt='%10.5f')
     np.savetxt(path + '/EdgeFeatures.csv', EdgeFeature, fmt='%10.5f')
     np.savetxt(path + '/EdgeIndices.csv', EdgeIndex, delimiter=',', fmt='%d')
