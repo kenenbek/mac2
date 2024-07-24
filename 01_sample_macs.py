@@ -34,7 +34,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from statsmodels.discrete.discrete_model import Logit #.fit
 from statsmodels.tools import add_constant
 ### other shit 
-resource.setrlimit(resource.RLIMIT_NOFILE, (10000,-1))
+#resource.setrlimit(resource.RLIMIT_NOFILE, (10000,-1))
 warnings.filterwarnings("ignore")  # sklearn gives hella warnings.
 
 # Argument parsing
