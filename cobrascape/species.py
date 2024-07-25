@@ -792,6 +792,8 @@ def init_fva_constraints(mod_, opt_frac=0.1, pfba_fact=1.5, verbose=True):
     percentage_true = (true_cases / total_cases) * 100
 
     # Print outputs with formatted strings for better readability
+    print("opt_frac:  ", opt_frac)
+    print("pfba_fact:  ", pfba_fact)
     print(f"Total cases evaluated: {total_cases}")
     print(f"Cases where condition was true: {true_cases}")
     print(f"Percentage of cases where the condition was true: {percentage_true:.2f}%")
