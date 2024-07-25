@@ -50,3 +50,15 @@ def get_input_of_fva(COBRA_MODEL, strain_id, save_samples_dir, num_iter):
         np.savetxt(path + '/Labels_obj.csv', [-result.fun], fmt='%10.5f')
         np.savetxt(path + '/Labels_solu.csv', result.x, fmt='%10.5f')
 
+
+def clean_flux_samples(model, flux_values):
+    fixed_flux_samples = flux_values.copy()
+    for index, row in flux_values.iterrows():
+        for column_name, flux_value in row.items():
+            lb = model.reactions.get_by_id(column_name).lower_bound
+            ub = model.reactions.get_by_id(column_name).upper_bound
+
+            if flux_value < lb or flux_value > ub:
+                corrected_flux = lb if flux_value < lb else ub
+                fixed_flux_samples.at[index, column_name] = corrected_flux
+    return fixed_flux_samples

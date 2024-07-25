@@ -19,6 +19,7 @@ e.g., tightdude$ python 01_sample_macs.py -f input_data -s 2 -o mnc_ensemble_0 -
 """
 print("... running 01_sample_macs.py ... loading packages and input data ...")
 import cobrascape.species as cs
+from cobrascape.kenenbek import clean_flux_samples
 from cobra.io import load_json_model
 import pandas as pd
 import sys,os,argparse,resource,warnings
@@ -210,7 +211,7 @@ if GENERATE_SAMPLES==True:
         print("\t... saving base cobra model: ", ENSEMBLE_BASEMODEL_FILE)
         save_json_model(COBRA_MODEL,ENSEMBLE_BASEMODEL_FILE)
         
-    base_flux_samples = pd.read_csv(MODEL_SAMPLES_FILE,index_col=0)
+    base_flux_samples = clean_flux_samples(pd.read_csv(MODEL_SAMPLES_FILE,index_col=0))
 
     ### Create Species object
     SPECIES_MODEL = cs.Species("species_obj")
