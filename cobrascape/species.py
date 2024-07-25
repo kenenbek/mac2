@@ -781,10 +781,20 @@ def init_fva_constraints(mod_, opt_frac=0.1, pfba_fact=1.5, verbose=True):
         print("...constraining the base cobra model with FVA +  pfba constraint")
     mod = mod_.copy()
     fva_df = flux_variability_analysis(mod, fraction_of_optimum=opt_frac, pfba_factor=pfba_fact)
+    total_cases = 0
+    true_cases = 0
     for rxn, row in fva_df.iterrows():
+        total_cases += 1
         if abs(row["maximum"] - row["minimum"]) > 1e-09:
+            true_cases += 1
             mod.reactions.get_by_id(rxn).lower_bound = row["minimum"]
             mod.reactions.get_by_id(rxn).upper_bound = row["maximum"]
+    percentage_true = (true_cases / total_cases) * 100
+
+    # Print outputs with formatted strings for better readability
+    print(f"Total cases evaluated: {total_cases}")
+    print(f"Cases where condition was true: {true_cases}")
+    print(f"Percentage of cases where the condition was true: {percentage_true:.2f}%")
     return mod, fva_df
 
 
