@@ -1162,10 +1162,6 @@ def sample_species(model,save_samples_dir,variants,flux_samples, fva_rxn_set="va
                 for react, constrnt_actions in variant_rxn_action_dict[allele_play].items():
                     base_bound = model.base_cobra_model.reactions.get_by_id(react).upper_bound
                     for strain_react in allele_play.cobra_reactions[react]:
-
-                        if base_bound < constrnt_actions[constrnt]:
-                            continue
-
                         strain_react.upper_bound = base_bound
                         strain_react.lower_bound = constrnt_actions[constrnt]
             ### if ub constraint is picked, use base model lb for lb constraint            
@@ -1173,10 +1169,6 @@ def sample_species(model,save_samples_dir,variants,flux_samples, fva_rxn_set="va
                 for react, constrnt_actions in variant_rxn_action_dict[allele_play].items():
                     base_bound = model.base_cobra_model.reactions.get_by_id(react).lower_bound
                     for strain_react in allele_play.cobra_reactions[react]:
-
-                        if constrnt_actions[constrnt] < base_bound:
-                            continue
-
                         strain_react.upper_bound = constrnt_actions[constrnt]
                         strain_react.lower_bound = base_bound
                         
@@ -1204,8 +1196,6 @@ def sample_species(model,save_samples_dir,variants,flux_samples, fva_rxn_set="va
                         str_obj.cobra_model.reactions.get_by_id(rxn).lower_bound=model.base_cobra_model.reactions.get_by_id(rxn).lower_bound
                         
                     if len(bnd_dict["ub"])>0:
-                        if np.mean(bnd_dict["ub"]) < str_obj.cobra_model.reactions.get_by_id(rxn).lower_bound:
-                            continue
                         str_obj.cobra_model.reactions.get_by_id(rxn).upper_bound=np.mean(bnd_dict["ub"])
                     else:
                         str_obj.cobra_model.reactions.get_by_id(rxn).upper_bound=model.base_cobra_model.reactions.get_by_id(rxn).upper_bound
@@ -1215,7 +1205,7 @@ def sample_species(model,save_samples_dir,variants,flux_samples, fva_rxn_set="va
         with ProcessPool(processes, initializer=species_init_Objective, initargs=(model,popfva_reacts_set,fva_frac_opt)) as pool:
             try:
                 if fva==True:
-                    m_o_fva_partial = partial(models_optimize_fva, save_samples_dir, t)
+                    m_o_fva_partial = partial(models_optimize_fva, save_samples_dir=save_samples_dir, t=t)
                     future = pool.map(m_o_fva_partial, [x.id for x in model.strains], timeout=120)
                     future_iterable = future.result()
                     pheno = list(future_iterable)
